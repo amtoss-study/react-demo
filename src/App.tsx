@@ -2,9 +2,9 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { HistoryItem } from './types'
-import Nav from './Nav'
-import NameForm from './NameForm'
-import History from './History'
+import Nav from './components/Nav'
+import NameForm from './components/NameForm'
+import History from './components/History'
 
 const App = () => {
     const [history, setHistory] = React.useState<HistoryItem[]>(JSON.parse(localStorage.getItem('history') || "[]"))

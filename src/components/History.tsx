@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { HistoryItem } from './types'
+import { HistoryItem } from '../types'
 
 type Props = {
     history: HistoryItem[]
