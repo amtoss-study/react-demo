@@ -1,18 +1,29 @@
 const App = () => {
-    const [name, setName] = React.useState("")
+    const [history, setHistory] = React.useState(JSON.parse(localStorage.getItem('history')) || [])
+    const setHistoryPersistent = newHistory => {
+        setHistory(newHistory)
+        localStorage.setItem('history', JSON.stringify(newHistory))
+    }
+    const addToHistory = nameValue => {
+        setHistoryPersistent([...history, { name: nameValue, timestamp: Date.now() }])
+    }
+    const removeFromHistory = timestamp => {
+        setHistoryPersistent(history.filter(item => item.timestamp !== timestamp))
+    }
     return (
         <React.Fragment>
-            <NameForm setName={setName} />
-            <Greeting name={name} />
+            <NameForm onSubmit={addToHistory} />
+            <History history={history} removeFromHistory={removeFromHistory} />
         </React.Fragment>
     )
 }
 
-const NameForm = ({ setName }) => {
+const NameForm = ({ onSubmit }) => {
     const [nameValue, setNameValue] = React.useState("")
     const handleSubmit = event => {
         event.preventDefault()
-        setName(nameValue)
+        onSubmit(nameValue)
+        setNameValue("")
     }
     const handleChange = event => {
         setNameValue(event.target.value)
@@ -27,6 +38,23 @@ const NameForm = ({ setName }) => {
     )
 }
 
-const Greeting = ({ name }) => <p>Hello { name }</p>
+const History = ({ history, removeFromHistory }) => {
+    return (
+        <div>
+            <h3>History of visits</h3>
+            <ol>
+                {history.map(({ timestamp, name }) => {
+                    const dateStr = new Date(timestamp).toLocaleString()
+                    return (
+                        <li key={timestamp}>
+                            <span style={{ marginRight: '20px' }}>{dateStr} - {name}</span>
+                            <button onClick={() => removeFromHistory(timestamp)}>x</button>
+                        </li>
+                    )
+                })}
+            </ol>
+        </div>
+    )
+}
 
 ReactDOM.render(<App />, document.getElementById("react-root"))
