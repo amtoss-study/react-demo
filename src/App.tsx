@@ -1,6 +1,8 @@
 import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { HistoryItem } from './types'
+import Nav from './Nav'
 import NameForm from './NameForm'
 import History from './History'
 
@@ -17,10 +19,17 @@ const App = () => {
         setHistoryPersistent(history.filter(item => item.timestamp !== timestamp))
     }
     return (
-        <React.Fragment>
-            <NameForm onSubmit={addToHistory} />
-            <History history={history} removeFromHistory={removeFromHistory} />
-        </React.Fragment>
+        <Router>
+            <Nav />
+            <Switch>
+                <Route path="/history">
+                    <History history={history} removeFromHistory={removeFromHistory} />
+                </Route>
+                <Route path="/">
+                    <NameForm onSubmit={addToHistory} />
+                </Route>
+            </Switch>
+        </Router>
     )
 }
 
