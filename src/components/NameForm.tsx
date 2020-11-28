@@ -18,8 +18,8 @@ const NameForm = ({ onSubmit }: Props) => {
         <form onSubmit={handleSubmit} autoComplete="off">
             <h3>What is your name?</h3>
             <input name="name" value={nameValue} onChange={handleChange} />
-            <p>Current value: { nameValue }</p>
             <button type="submit">Submit</button>
+            <p>Current value: { nameValue }</p>
         </form>
     )
 }
