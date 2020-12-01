@@ -14,7 +14,15 @@ const useVisitsHistory = () => {
     const removeFromHistory = (timestamp: number) => {
         setHistoryPersistent(history.filter(item => item.timestamp !== timestamp))
     }
-    return { history, addToHistory, removeFromHistory }
+    const editHistoryItem = (timestamp: number, nameValue: string) => {
+        setHistoryPersistent(history.map(item => {
+            if (item.timestamp === timestamp) {
+                return { timestamp, name: nameValue }
+            }
+            return item
+        }))
+    }
+    return { history, addToHistory, removeFromHistory, editHistoryItem }
 }
 
 export default useVisitsHistory

@@ -2,10 +2,11 @@ import React from 'react'
 
 type Props = {
     onSubmit: (nameValue: string) => void
+    initialValue?: string
 }
 
-const NameForm = ({ onSubmit }: Props) => {
-    const [nameValue, setNameValue] = React.useState("")
+const NameForm = ({ onSubmit, initialValue = "" }: Props) => {
+    const [nameValue, setNameValue] = React.useState(initialValue)
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         onSubmit(nameValue)
@@ -16,10 +17,8 @@ const NameForm = ({ onSubmit }: Props) => {
     }
     return (
         <form onSubmit={handleSubmit} autoComplete="off">
-            <h3>What is your name?</h3>
             <input name="name" value={nameValue} onChange={handleChange} />
             <button type="submit">Submit</button>
-            <p>Current value: { nameValue }</p>
         </form>
     )
 }

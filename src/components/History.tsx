@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { HistoryItem } from '../types'
 
@@ -16,8 +17,13 @@ const History = ({ history, removeFromHistory }: Props) => {
                     const dateStr = new Date(timestamp).toLocaleString()
                     return (
                         <li key={timestamp}>
-                            <span style={{ marginRight: '20px' }}>{dateStr} - {name}</span>
-                            <button onClick={() => removeFromHistory(timestamp)}>x</button>
+                            <Link to={`/visits/${timestamp}`}>{dateStr} - {name}</Link>
+                            <button
+                                style={{ marginLeft: '20px' }}
+                                onClick={() => removeFromHistory(timestamp)}
+                            >
+                                x
+                            </button>
                         </li>
                     )
                 })}

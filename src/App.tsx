@@ -4,19 +4,22 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Nav from './components/Nav'
 import NameForm from './components/NameForm'
 import History from './components/History'
+import VisitDetails from './components/VisitDetails';
 import useVisitsHistory from './hooks/useVisitsHistory';
 
 const App = () => {
-    const { history, addToHistory, removeFromHistory } = useVisitsHistory()
+    const { history, addToHistory, removeFromHistory, editHistoryItem } = useVisitsHistory()
     return (
         <Router>
             <Nav />
             <Switch>
-                <Route path="/history">
-                    <History history={history} removeFromHistory={removeFromHistory} />
+                <Route path="/visits/:visitId">
+                    <VisitDetails history={history} editHistoryItem={editHistoryItem} />
                 </Route>
                 <Route path="/">
+                    <h3>What is your name?</h3>
                     <NameForm onSubmit={addToHistory} />
+                    <History history={history} removeFromHistory={removeFromHistory} />
                 </Route>
             </Switch>
         </Router>
