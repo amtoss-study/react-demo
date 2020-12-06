@@ -8,50 +8,56 @@ const useVisitsHistory = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | undefined>(undefined)
 
-    const loadHistory = useCallback(() => {
+    const loadHistory = useCallback(async () => {
         setIsLoading(true)
         setError(undefined)
-        get("visits")
-            .then(setHistory)
-            .catch(setError)
-            .finally(() => setIsLoading(false))
+        try {
+            const data = await get("visits")
+            setHistory(data)
+        } catch (error) {
+            setError(error)
+        } finally {
+            setIsLoading(false)
+        }
     }, [])
 
-    const addToHistory = (nameValue: string) => {
+    const addToHistory = async (nameValue: string) => {
         setIsLoading(true)
         setError(undefined)
-        post("visits", { name: nameValue, timestamp: Date.now() })
-            .then(data => {
-                setHistory([...history, data])
-            })
-            .catch(setError)
-            .finally(() => setIsLoading(false))
+
+        try {
+            const data = await post("visits", { name: nameValue, timestamp: Date.now() })
+            setHistory([...history, data])
+        } catch (error) {
+            setError(error)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const removeFromHistory = (id: number) => {
         // Optimistic update
         setHistory(history.filter(item => item.id !== id))
-        del(`visits/${id}`).catch(error => {
+        try {
+            del(`visits/${id}`)
+        } catch (error) {
             setError(error)
             // Cancel update on error
             setHistory(history)
-        })
+        }
     }
 
-    const editHistoryItem = (id: number, nameValue: string) => {
+    const editHistoryItem = async (id: number, nameValue: string) => {
         setIsLoading(true)
         setError(undefined)
-        patch(`visits/${id}`, { name: nameValue })
-            .then(data => {
-                setHistory(history.map(item => {
-                    if (item.id === id) {
-                        return data
-                    }
-                    return item
-                }))
-            })
-            .catch(setError)
-            .finally(() => setIsLoading(false))
+        try {
+            const data = await patch(`visits/${id}`, { name: nameValue })
+            setHistory(history.map(item => item.id === id ? data : item))
+        } catch (error) {
+            setError(error)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return { history, loadHistory, isLoading, error, addToHistory, removeFromHistory, editHistoryItem }
