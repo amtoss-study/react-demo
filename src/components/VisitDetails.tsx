@@ -7,9 +7,10 @@ import { HistoryItem } from '../types'
 type Props = {
     history: HistoryItem[],
     editHistoryItem: (timestamp: number, nameValue: string) => void
+    isLoading: boolean
 }
 
-const VisitDetails = ({ history, editHistoryItem }: Props) => {
+const VisitDetails = ({ history, editHistoryItem, isLoading }: Props) => {
     const [isEditing, setEditing] = React.useState(false)
     const { visitId } = useParams<{ visitId?: string }>()
     const visit = history.find(item => item.id.toString() === visitId)
@@ -24,10 +25,10 @@ const VisitDetails = ({ history, editHistoryItem }: Props) => {
     return (
         <div>
             <p>{new Date(timestamp).toLocaleString()}</p>
-            {isEditing && (
+            {(isEditing || isLoading) && (
                 <NameForm initialValue={name} onSubmit={onEdit} />
             )}
-            {!isEditing && (
+            {!isEditing && !isLoading && (
                 <>
                     <p>{name}</p>
                     <button onClick={() => setEditing(true)}>Edit</button>

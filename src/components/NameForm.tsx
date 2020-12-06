@@ -18,7 +18,12 @@ const NameForm = ({ onSubmit, initialValue = "" }: Props) => {
     return (
         <form onSubmit={handleSubmit} autoComplete="off">
             <input name="name" value={nameValue} onChange={handleChange} />
-            <button type="submit">Submit</button>
+            <button
+                type="submit"
+                disabled={!nameValue || nameValue === initialValue}
+            >
+                Submit
+            </button>
         </form>
     )
 }

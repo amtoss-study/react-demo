@@ -6,10 +6,11 @@ import { HistoryItem } from '../types'
 type Props = {
     history: HistoryItem[]
     loadHistory: () => void
+    isLoading: boolean
     removeFromHistory: (timestamp: number) => void
 }
 
-const History = ({ history, loadHistory, removeFromHistory }: Props) => {
+const History = ({ history, loadHistory, isLoading, removeFromHistory }: Props) => {
     return (
         <div>
             <h3>History of visits</h3>
@@ -29,7 +30,9 @@ const History = ({ history, loadHistory, removeFromHistory }: Props) => {
                     )
                 })}
             </ol>
-            <button onClick={loadHistory}>Reload history</button>
+            {history.length === 0 && !isLoading && <p>No visits yet</p>}
+            {!isLoading && <button onClick={loadHistory}>Reload history</button>}
+            {isLoading && <p>Loading...</p>}
         </div>
     )
 }

@@ -8,7 +8,7 @@ import VisitDetails from './components/VisitDetails';
 import useVisitsHistory from './hooks/useVisitsHistory';
 
 const App = () => {
-    const { history, loadHistory, addToHistory, removeFromHistory, editHistoryItem } = useVisitsHistory()
+    const { history, loadHistory, isLoading, addToHistory, removeFromHistory, editHistoryItem } = useVisitsHistory()
     React.useEffect(() => {
         loadHistory()
     }, [loadHistory])
@@ -17,12 +17,17 @@ const App = () => {
             <Nav />
             <Switch>
                 <Route path="/visits/:visitId">
-                    <VisitDetails history={history} editHistoryItem={editHistoryItem} />
+                    <VisitDetails history={history} editHistoryItem={editHistoryItem} isLoading={isLoading} />
                 </Route>
                 <Route path="/">
                     <h3>What is your name?</h3>
                     <NameForm onSubmit={addToHistory} />
-                    <History history={history} loadHistory={loadHistory} removeFromHistory={removeFromHistory} />
+                    <History
+                        history={history}
+                        loadHistory={loadHistory}
+                        isLoading={isLoading}
+                        removeFromHistory={removeFromHistory}
+                    />
                 </Route>
             </Switch>
         </Router>
