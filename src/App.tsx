@@ -8,7 +8,15 @@ import VisitDetails from './components/VisitDetails';
 import useVisitsHistory from './hooks/useVisitsHistory';
 
 const App = () => {
-    const { history, loadHistory, isLoading, addToHistory, removeFromHistory, editHistoryItem } = useVisitsHistory()
+    const {
+        history,
+        loadHistory,
+        isLoading,
+        error,
+        addToHistory,
+        removeFromHistory,
+        editHistoryItem,
+    } = useVisitsHistory()
     React.useEffect(() => {
         loadHistory()
     }, [loadHistory])
@@ -27,6 +35,7 @@ const App = () => {
                         loadHistory={loadHistory}
                         isLoading={isLoading}
                         removeFromHistory={removeFromHistory}
+                        error={error}
                     />
                 </Route>
             </Switch>

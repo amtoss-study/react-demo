@@ -13,6 +13,9 @@ type Props = {
 const VisitDetails = ({ history, editHistoryItem, isLoading }: Props) => {
     const [isEditing, setEditing] = React.useState(false)
     const { visitId } = useParams<{ visitId?: string }>()
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
     const visit = history.find(item => item.id.toString() === visitId)
     if (visit === undefined) {
         return <p>Visit not found</p>
@@ -25,10 +28,10 @@ const VisitDetails = ({ history, editHistoryItem, isLoading }: Props) => {
     return (
         <div>
             <p>{new Date(timestamp).toLocaleString()}</p>
-            {(isEditing || isLoading) && (
+            {isEditing && (
                 <NameForm initialValue={name} onSubmit={onEdit} />
             )}
-            {!isEditing && !isLoading && (
+            {!isEditing && (
                 <>
                     <p>{name}</p>
                     <button onClick={() => setEditing(true)}>Edit</button>

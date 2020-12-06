@@ -6,30 +6,41 @@ import { get, post, patch, del } from '../api'
 const useVisitsHistory = () => {
     const [history, setHistory] = useState<HistoryItem[]>([])
     const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState<string | undefined>(undefined)
 
     const loadHistory = useCallback(() => {
         setIsLoading(true)
-        get("visits").then(data => {
-            setHistory(data)
-            setIsLoading(false)
-        })
+        setError(undefined)
+        get("visits")
+            .then(setHistory)
+            .catch(setError)
+            .finally(() => setIsLoading(false))
     }, [])
 
     const addToHistory = (nameValue: string) => {
         setIsLoading(true)
+        setError(undefined)
         post("visits", { name: nameValue, timestamp: Date.now() })
             .then(data => {
                 setHistory([...history, data])
-                setIsLoading(false)
             })
+            .catch(setError)
+            .finally(() => setIsLoading(false))
     }
 
     const removeFromHistory = (id: number) => {
-        del(`visits/${id}`).then(() => setHistory(history.filter(item => item.id !== id)))
+        // Optimistic update
+        setHistory(history.filter(item => item.id !== id))
+        del(`visits/${id}`).catch(error => {
+            setError(error)
+            // Cancel update on error
+            setHistory(history)
+        })
     }
 
     const editHistoryItem = (id: number, nameValue: string) => {
         setIsLoading(true)
+        setError(undefined)
         patch(`visits/${id}`, { name: nameValue })
             .then(data => {
                 setHistory(history.map(item => {
@@ -38,11 +49,12 @@ const useVisitsHistory = () => {
                     }
                     return item
                 }))
-                setIsLoading(false)
             })
+            .catch(setError)
+            .finally(() => setIsLoading(false))
     }
 
-    return { history, loadHistory, isLoading, addToHistory, removeFromHistory, editHistoryItem }
+    return { history, loadHistory, isLoading, error, addToHistory, removeFromHistory, editHistoryItem }
 }
 
 export default useVisitsHistory

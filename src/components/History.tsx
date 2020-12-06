@@ -8,9 +8,10 @@ type Props = {
     loadHistory: () => void
     isLoading: boolean
     removeFromHistory: (timestamp: number) => void
+    error?: string
 }
 
-const History = ({ history, loadHistory, isLoading, removeFromHistory }: Props) => {
+const History = ({ history, loadHistory, isLoading, removeFromHistory, error }: Props) => {
     return (
         <div>
             <h3>History of visits</h3>
@@ -33,6 +34,7 @@ const History = ({ history, loadHistory, isLoading, removeFromHistory }: Props) 
             {history.length === 0 && !isLoading && <p>No visits yet</p>}
             {!isLoading && <button onClick={loadHistory}>Reload history</button>}
             {isLoading && <p>Loading...</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
     )
 }
