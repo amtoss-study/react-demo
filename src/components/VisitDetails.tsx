@@ -12,13 +12,13 @@ type Props = {
 const VisitDetails = ({ history, editHistoryItem }: Props) => {
     const [isEditing, setEditing] = React.useState(false)
     const { visitId } = useParams<{ visitId?: string }>()
-    const visit = history.find(item => item.timestamp.toString() === visitId)
+    const visit = history.find(item => item.id.toString() === visitId)
     if (visit === undefined) {
         return <p>Visit not found</p>
     }
-    const { timestamp, name } = visit
+    const { id, timestamp, name } = visit
     const onEdit = (nameValue: string) => {
-        editHistoryItem(timestamp, nameValue)
+        editHistoryItem(id, nameValue)
         setEditing(false)
     }
     return (

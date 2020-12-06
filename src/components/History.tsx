@@ -5,22 +5,23 @@ import { HistoryItem } from '../types'
 
 type Props = {
     history: HistoryItem[]
+    loadHistory: () => void
     removeFromHistory: (timestamp: number) => void
 }
 
-const History = ({ history, removeFromHistory }: Props) => {
+const History = ({ history, loadHistory, removeFromHistory }: Props) => {
     return (
         <div>
             <h3>History of visits</h3>
             <ol>
-                {history.map(({ timestamp, name }) => {
+                {history.map(({ id, timestamp, name }) => {
                     const dateStr = new Date(timestamp).toLocaleString()
                     return (
-                        <li key={timestamp}>
-                            <Link to={`/visits/${timestamp}`}>{dateStr} - {name}</Link>
+                        <li key={id}>
+                            <Link to={`/visits/${id}`}>{dateStr} - {name}</Link>
                             <button
                                 style={{ marginLeft: '20px' }}
-                                onClick={() => removeFromHistory(timestamp)}
+                                onClick={() => removeFromHistory(id)}
                             >
                                 x
                             </button>
@@ -28,6 +29,7 @@ const History = ({ history, removeFromHistory }: Props) => {
                     )
                 })}
             </ol>
+            <button onClick={loadHistory}>Reload history</button>
         </div>
     )
 }
