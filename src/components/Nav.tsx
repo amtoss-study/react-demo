@@ -1,16 +1,20 @@
-import React from 'react'
-import { NavLink, NavLinkProps } from 'react-router-dom'
+import React from "react";
+import { NavLink, NavLinkProps } from "react-router-dom";
 
-const Link = (props: NavLinkProps) => <NavLink {...props} exact={true} activeStyle={{ fontWeight: 'bold' }} />
+const Link = (props: NavLinkProps) => (
+  <NavLink {...props} exact={true} activeStyle={{ fontWeight: "bold" }} />
+);
 
 const Nav = () => {
-    return (
-        <nav>
-            <ul>
-                <li><Link to="/">Main</Link></li>
-            </ul>
-        </nav>
-    )
-}
+  return (
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">Main</Link>
+        </li>
+      </ul>
+    </nav>
+  );
+};
 
-export default Nav
+export default Nav;
