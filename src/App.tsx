@@ -1,50 +1,24 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import Nav from "./components/Nav";
-import NameForm from "./components/NameForm";
-import History from "./components/History";
-import VisitDetails from "./components/VisitDetails";
-import useVisitsHistory from "./hooks/useVisitsHistory";
+import VisitsList from "./containers/VisitsList";
+import VisitDetails from "./containers/VisitDetails";
 import "./index.css";
+import store from "./store";
 
 const App = () => {
-  const {
-    history,
-    loadHistory,
-    isLoading,
-    error,
-    addToHistory,
-    removeFromHistory,
-    editHistoryItem,
-  } = useVisitsHistory();
-  React.useEffect(() => {
-    loadHistory();
-  }, [loadHistory]);
   return (
-    <Router>
-      <Nav />
-      <Switch>
-        <Route path="/visits/:visitId">
-          <VisitDetails
-            history={history}
-            editHistoryItem={editHistoryItem}
-            isLoading={isLoading}
-          />
-        </Route>
-        <Route path="/">
-          <h3>What is your name?</h3>
-          <NameForm onSubmit={addToHistory} />
-          <History
-            history={history}
-            loadHistory={loadHistory}
-            isLoading={isLoading}
-            removeFromHistory={removeFromHistory}
-            error={error}
-          />
-        </Route>
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Nav />
+        <Switch>
+          <Route path="/visits/:visitId" component={VisitDetails} />
+          <Route path="/" component={VisitsList} />
+        </Switch>
+      </Router>
+    </Provider>
   );
 };
 
