@@ -1,26 +1,22 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import NameForm from "components/NameForm";
-import { getVisitById } from "containers/Entities/Visits/selectors";
-import { State } from "store";
 import { loadVisit, editVisit } from "./slice";
-import { getIsLoading, getError } from "./selectors";
+import { getVisitId, getVisit, getIsLoading, getError } from "./selectors";
 
 const VisitDetails = () => {
   const dispatch = useDispatch();
-  const { visitId } = useParams<{ visitId?: string }>();
+  const visitId = useSelector(getVisitId);
+  const visit = useSelector(getVisit);
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
-  const visit = useSelector((state: State) =>
-    getVisitById(state, Number(visitId))
-  );
+
   const [isEditing, setEditing] = React.useState(false);
 
   React.useEffect(() => {
     if (visitId) {
-      dispatch(loadVisit(Number(visitId)));
+      dispatch(loadVisit(visitId));
     }
   }, [dispatch, visitId]);
 

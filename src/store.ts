@@ -1,5 +1,12 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { Middleware, AnyAction } from "redux";
 import createSagaMiddleware from "redux-saga";
+import {
+  connectRouter,
+  routerMiddleware as createRouterMiddleware,
+  RouterState,
+} from "connected-react-router";
+import { createBrowserHistory } from "history";
 
 import visitsReducer, {
   State as VisitsState,
@@ -13,6 +20,7 @@ import visitDetailsReducer, {
 import saga from "saga";
 
 export type State = {
+  router: RouterState;
   entities: {
     visits: VisitsState;
   };
@@ -20,17 +28,22 @@ export type State = {
   visitDetails: VisitDetailsState;
 };
 
+export const history = createBrowserHistory();
+
+const routerMiddleware = createRouterMiddleware(history);
 const sagaMiddleware = createSagaMiddleware();
 
-const store = configureStore<State>({
+const store = configureStore<State, AnyAction, Middleware[]>({
   reducer: {
+    // @ts-ignore
+    router: connectRouter(history),
     entities: combineReducers({
       visits: visitsReducer,
     }),
     visitsList: visitsListReducer,
     visitDetails: visitDetailsReducer,
   },
-  middleware: [sagaMiddleware],
+  middleware: [routerMiddleware, sagaMiddleware],
 });
 
 sagaMiddleware.run(saga);

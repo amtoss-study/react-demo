@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import NameForm from "components/NameForm";
+import { getVisitDetailsLink } from "urls";
 import { getVisits, getIsLoading, getError } from "./selectors";
 import { loadVisits, addVisit, removeVisit } from "./slice";
 
@@ -34,7 +35,7 @@ const VisitsList = () => {
           const dateStr = new Date(timestamp).toLocaleString();
           return (
             <li key={id}>
-              <Link to={`/visits/${id}`}>
+              <Link to={getVisitDetailsLink(id)}>
                 {dateStr} - {name}
               </Link>
               <button
