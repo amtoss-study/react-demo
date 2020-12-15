@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import NameForm from "../../components/NameForm";
+import NameForm from "components/NameForm";
 import { getVisits, getIsLoading, getError } from "./selectors";
 import { loadVisits, addVisit, removeVisit } from "./slice";
 

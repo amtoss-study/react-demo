@@ -2,11 +2,11 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import NameForm from "../../components/NameForm";
-import { getIsLoading, getError } from "./selectors";
-import { getVisitById } from "../Entities/Visits/selectors";
+import NameForm from "components/NameForm";
+import { getVisitById } from "containers/Entities/Visits/selectors";
+import { State } from "store";
 import { loadVisit, editVisit } from "./slice";
-import { State } from "../../store";
+import { getIsLoading, getError } from "./selectors";
 
 const VisitDetails = () => {
   const dispatch = useDispatch();

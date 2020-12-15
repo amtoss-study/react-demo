@@ -7,7 +7,7 @@ import {
   all,
 } from "redux-saga/effects";
 
-import api from "./api";
+import api from "api";
 import {
   loadVisitsAttempt,
   loadVisitsSuccess,
@@ -20,7 +20,7 @@ import {
   AddVisitAction,
   REMOVE_VISIT,
   RemoveVisitAction,
-} from "./containers/VisitsList/slice";
+} from "containers/VisitsList/slice";
 import {
   loadVisitAttempt,
   loadVisitSuccess,
@@ -29,11 +29,11 @@ import {
   LoadVisitAction,
   EDIT_VISIT,
   EditVisitAction,
-} from "./containers/VisitDetails/slice";
-import { addVisits } from "./containers/Entities/Visits/slice";
-import { Visit } from "./containers/Entities/Visits/types";
-import { getVisitsIds } from "./containers/VisitsList/selectors";
-import { getVisitById } from "./containers/Entities/Visits/selectors";
+} from "containers/VisitDetails/slice";
+import { addVisits } from "containers/Entities/Visits/slice";
+import { Visit } from "containers/Entities/Visits/types";
+import { getVisitsIds } from "containers/VisitsList/selectors";
+import { getVisitById } from "containers/Entities/Visits/selectors";
 
 function* fetchVisits() {
   yield put(resetVisits());

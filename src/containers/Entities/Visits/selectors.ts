@@ -1,4 +1,4 @@
-import { State } from "../../../store";
+import { State } from "store";
 import { Visit } from "./types";
 
 export const getVisitById = (state: State, id: number): Visit | undefined =>

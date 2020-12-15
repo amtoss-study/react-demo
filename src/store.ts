@@ -3,14 +3,14 @@ import createSagaMiddleware from "redux-saga";
 
 import visitsReducer, {
   State as VisitsState,
-} from "./containers/Entities/Visits/slice";
+} from "containers/Entities/Visits/slice";
 import visitsListReducer, {
   State as VisitsListState,
-} from "./containers/VisitsList/slice";
+} from "containers/VisitsList/slice";
 import visitDetailsReducer, {
   State as VisitDetailsState,
-} from "./containers/VisitDetails/slice";
-import saga from "./saga";
+} from "containers/VisitDetails/slice";
+import saga from "saga";
 
 export type State = {
   entities: {

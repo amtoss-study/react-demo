@@ -1,6 +1,6 @@
-import { State } from "../../store";
-import { Visit } from "../Entities/Visits/types";
-import { getVisitsByIds } from "../Entities/Visits/selectors";
+import { State } from "store";
+import { Visit } from "containers/Entities/Visits/types";
+import { getVisitsByIds } from "containers/Entities/Visits/selectors";
 
 export const getVisitsIds = (state: State): number[] =>
   state.visitsList.visitsIds;

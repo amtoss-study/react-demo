@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
-import Nav from "./components/Nav";
-import VisitsList from "./containers/VisitsList";
-import VisitDetails from "./containers/VisitDetails";
+import Nav from "components/Nav";
+import VisitsList from "containers/VisitsList";
+import VisitDetails from "containers/VisitDetails";
+import store from "store";
 import "./index.css";
-import store from "./store";
 
 const App = () => {
   return (
