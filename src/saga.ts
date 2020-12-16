@@ -109,7 +109,7 @@ export default function* saga() {
     takeLatest(LOAD_VISITS, fetchVisits),
     takeEvery(REMOVE_VISIT, removeVisit),
     takeEvery(ADD_VISIT, addVisit),
-    takeEvery(LOAD_VISIT, fetchVisit),
+    takeLatest(LOAD_VISIT, fetchVisit),
     takeEvery(EDIT_VISIT, editVisit),
   ]);
 }
